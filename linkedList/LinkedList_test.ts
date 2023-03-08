@@ -135,3 +135,30 @@ test({
     assertEquals(ll.print(false), [1, 2, 5, 3, 4, null]);
   },
 });
+
+test({
+  name: "get node at position at head",
+  fn() {
+    const ll = createList([12, 3, 4, 56, 72]);
+    const result = ll.getNodeAtPosition(0);
+    assertEquals(result?.data, 12);
+  },
+});
+
+test({
+  name: "get node at position at tail",
+  fn() {
+    const ll = createList([12, 3, 4, 56, 72]);
+    const result = ll.getNodeAtPosition(ll.length - 1);
+    assertEquals(result?.data, 72);
+  },
+});
+
+test({
+  name: "get node at position in the middle",
+  fn() {
+    const ll = createList([12, 3, 4, 56, 72]);
+    const result = ll.getNodeAtPosition(2);
+    assertEquals(result?.data, 4);
+  },
+});

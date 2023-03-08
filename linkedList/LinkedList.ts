@@ -63,31 +63,38 @@ export class LinkedList<T> {
     return node;
   }
 
-  insertAtPosition(node: ListNode<T>, position: number) {
-    if (position < 0)
-      throw new Error("negative index, operation not permitted");
-    if (position === 0) this.insertAtHead(node);
-    if (position >= this.length) this.insertAtTail(node);
-
-    let index = -1;
+  getNodeAtPosition(position: number) {
+    let index = 0;
     let currentNode = this.getHead();
 
-    while (index !== position) {
+    while (index < position) {
       if (currentNode) {
         currentNode = currentNode.next;
       }
       index += 1;
     }
 
-    const previousCurrent = currentNode;
-    // this guard seems superfluous, but come to think of it, it may be 
-    // a sign from the compiler that the logic can be 'smarter'
-    // not sure if it's worth it, I like the guard clauses up top
-    if (currentNode) {
-      currentNode.next = node;
-    }
-    node.next = previousCurrent;
+    return currentNode;
+  }
 
+  insertAtPosition(node: ListNode<T>, position: number) {
+    if (position < 0) {
+      throw new Error("negative index, operation not permitted");
+    } else if (position === 0) {
+      this.insertAtHead(node);
+    } else if (position >= this.length) {
+      this.insertAtTail(node);
+    } else {
+      const prevNode = this.getNodeAtPosition(position - 1);
+      console.log(prevNode);
+      if (prevNode) {
+        const nextNode = prevNode.next;
+        prevNode.next = node;
+        node.next = nextNode;
+      }
+    }
+
+    return node;
   }
 
   search(data: T) {
