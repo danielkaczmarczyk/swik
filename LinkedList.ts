@@ -12,9 +12,23 @@ export class ListNode<T> {
 
 export class LinkedList<T> {
   head: ListNode<T> | null;
+  length: number;
 
   constructor(head: ListNode<T> | null) {
     this.head = head;
+    if (head) {
+      this.length = 1;
+    } else {
+      this.length = 0;
+    }
+  }
+
+  private incrementLength() {
+    this.length += 1;
+  }
+
+  private decrementLength() {
+    this.length -= 1;
   }
 
   // TODO handle empty list
@@ -37,6 +51,8 @@ export class LinkedList<T> {
     } else {
       this.head = node;
     }
+
+    this.incrementLength();
     return node;
   }
 
@@ -44,6 +60,7 @@ export class LinkedList<T> {
     const currentHead = this.getHead();
     this.head = node;
     node.next = currentHead;
+    this.incrementLength();
     return node;
   }
 
@@ -64,5 +81,9 @@ export class LinkedList<T> {
 
   delete(data: T) {
     unimplemented();
+  }
+
+  isEmpty() {
+    return this.head === null;
   }
 }

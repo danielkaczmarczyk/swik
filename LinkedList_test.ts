@@ -17,7 +17,7 @@ const test = Deno.test;
 // tests
 test("Linked List can be created", () => {
   assertEquals(head, headFetched);
-  assertEquals(headFetched.data, 3);
+  assertEquals(headFetched?.data, 3);
 });
 
 test("Inserting at tail", () => {
@@ -28,10 +28,13 @@ test("Inserting at tail", () => {
 });
 
 test("Inserting at head", () => {
+  const oldLength = ll.length;
   const newHeadNode = new ListNode<number>(15, null);
   ll.insertAtHead(newHeadNode);
   const newHead = ll.getHead();
+  const newLength = ll.length;
   assertEquals(newHead, newHeadNode);
+  assertEquals(oldLength + 1, newLength);
 });
 
 test("Deleting", () => {
@@ -54,6 +57,6 @@ test("Checking if its empty", () => {
   test("if it is empty", () => {
     const ll = new LinkedList<number>(null);
     const result = ll.isEmpty();
-    assertEquals(result, true)
-  })
+    assertEquals(result, true);
+  });
 });
