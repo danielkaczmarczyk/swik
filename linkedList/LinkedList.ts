@@ -35,6 +35,15 @@ export class LinkedList<T> {
     this.length -= 1;
   }
 
+  // TODO implement
+  traversable() {
+    // loop forward following the links
+    // loop backward following links
+    // has to access all elements
+    // useful while testing modifications to the list, esp.
+    // insertAt* methods and deletions
+  }
+
   getHead() {
     return this.head;
   }
@@ -120,24 +129,33 @@ export class LinkedList<T> {
     return null;
   }
 
-  // TODO implement double linking
+  // what a mess
+  // TODO refactor
   delete(data: T) {
     let currentNode = this.getHead();
     let previousNode = null;
+
     while (currentNode) {
       if (currentNode.data === data) {
         if (currentNode === this.getHead()) {
           // head case
+          const headHolder = this.getHead();
           const nextNode = currentNode.next;
+          if (nextNode) nextNode.prev = null;
           this.head = nextNode;
+          if (headHolder) headHolder.next = null;
           this.decrementLength();
           return currentNode;
         } else {
           // any other case
           if (previousNode) {
             previousNode.next = currentNode.next;
+            if (currentNode.next) currentNode.next.prev = previousNode;
             const nodeBeingDeleted = currentNode;
+            // these could be achieved in the Node class
+            // i.e. node.clearPointers or sth
             nodeBeingDeleted.next = null;
+            nodeBeingDeleted.prev = null;
             this.decrementLength();
           }
         }
