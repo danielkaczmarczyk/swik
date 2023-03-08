@@ -31,7 +31,6 @@ export class LinkedList<T> {
     this.length -= 1;
   }
 
-  // TODO handle empty list
   getHead() {
     return this.head;
   }
@@ -64,9 +63,31 @@ export class LinkedList<T> {
     return node;
   }
 
-  // TODO
-  insertAtPosition(node: ListNode<T>) {
-    unimplemented();
+  insertAtPosition(node: ListNode<T>, position: number) {
+    if (position < 0)
+      throw new Error("negative index, operation not permitted");
+    if (position === 0) this.insertAtHead(node);
+    if (position >= this.length) this.insertAtTail(node);
+
+    let index = -1;
+    let currentNode = this.getHead();
+
+    while (index !== position) {
+      if (currentNode) {
+        currentNode = currentNode.next;
+      }
+      index += 1;
+    }
+
+    const previousCurrent = currentNode;
+    // this guard seems superfluous, but come to think of it, it may be 
+    // a sign from the compiler that the logic can be 'smarter'
+    // not sure if it's worth it, I like the guard clauses up top
+    if (currentNode) {
+      currentNode.next = node;
+    }
+    node.next = previousCurrent;
+
   }
 
   search(data: T) {
@@ -80,14 +101,13 @@ export class LinkedList<T> {
     return null;
   }
 
-  // TODO
   delete(data: T) {
     let currentNode = this.getHead();
     let previousNode = null;
     while (currentNode) {
       if (currentNode.data === data) {
-        // head case
         if (currentNode === this.getHead()) {
+          // head case
           const nextNode = currentNode.next;
           this.head = nextNode;
           this.decrementLength();

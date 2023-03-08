@@ -72,22 +72,22 @@ test({
 test({
   name: "Deleting one",
   fn() {
-    const ll = createList([1,2,3,4,5,6,7,8])
+    const ll = createList([1, 2, 3, 4, 5, 6, 7, 8]);
     const lengthBeforeDeletion = ll.length;
-    ll.delete(5)
-    assertEquals(lengthBeforeDeletion, ll.length + 1)
-    assertEquals(ll.print(false), [1,2,3,4,6,7,8, null])
+    ll.delete(5);
+    assertEquals(lengthBeforeDeletion, ll.length + 1);
+    assertEquals(ll.print(false), [1, 2, 3, 4, 6, 7, 8, null]);
   },
 });
 
 test({
   name: "Deleting at tail",
   fn() {
-    const ll = createList([1,2,3,4,5,6,7,8])
+    const ll = createList([1, 2, 3, 4, 5, 6, 7, 8]);
     const lengthBeforeDeletion = ll.length;
-    ll.delete(8)
-    assertEquals(lengthBeforeDeletion, ll.length + 1)
-    assertEquals(ll.print(false), [1,2,3,4,5,6,7, null])
+    ll.delete(8);
+    assertEquals(lengthBeforeDeletion, ll.length + 1);
+    assertEquals(ll.print(false), [1, 2, 3, 4, 5, 6, 7, null]);
   },
 });
 
@@ -107,4 +107,31 @@ test("Checking if it is empty", () => {
   const ll = new LinkedList<number>(null);
   const result = ll.isEmpty();
   assertEquals(result, true);
+});
+
+test({
+  name: "Inserting using insertAtPosition at head",
+  fn() {
+    const ll = createList([1, 2, 3, 4]);
+    ll.insertAtPosition(new ListNode(5), 0);
+    assertEquals(ll.print(false), [5, 1, 2, 3, 4, null]);
+  },
+});
+
+test({
+  name: "Inserting using insertAtPosition at tail",
+  fn() {
+    const ll = createList([1, 2, 3, 4]);
+    ll.insertAtPosition(new ListNode(5), 4);
+    assertEquals(ll.print(false), [1, 2, 3, 4, 5, null]);
+  },
+});
+
+test({
+  name: "Inserting using insertAtPosition in the middle",
+  fn() {
+    const ll = createList([1, 2, 3, 4]);
+    ll.insertAtPosition(new ListNode(5), 2);
+    assertEquals(ll.print(false), [1, 2, 5, 3, 4, null]);
+  },
 });
