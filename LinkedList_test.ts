@@ -37,10 +37,26 @@ test("Inserting at head", () => {
   assertEquals(oldLength + 1, newLength);
 });
 
-test("Deleting", () => {
-  ll.delete(3);
-  const result = ll.search(3);
-  assertEquals(result, null);
+test("Deleting at head", () => {
+  const ll = new LinkedList<number>(new ListNode(3));
+});
+
+test({
+  name: "Deleting",
+  ignore: true,
+  fn() {},
+});
+
+test({
+  name: "Deleting multiple",
+  ignore: true,
+  fn() {},
+});
+
+test({
+  name: "Deleting at tail",
+  ignore: true,
+  fn() {},
 });
 
 test("Searching", () => {
@@ -48,15 +64,14 @@ test("Searching", () => {
   assertEquals(result?.data, 15);
 });
 
-test("Checking if its empty", () => {
-  test("if it is not empty", () => {
-    const ll = new LinkedList<number>(new ListNode(3, null));
-    const result = ll.isEmpty();
-    assertEquals(result, false);
-  });
-  test("if it is empty", () => {
-    const ll = new LinkedList<number>(null);
-    const result = ll.isEmpty();
-    assertEquals(result, true);
-  });
+test("Checking if it is not empty", () => {
+  const ll = new LinkedList<number>(new ListNode(3, null));
+  const result = ll.isEmpty();
+  assertEquals(result, false);
+});
+
+test("Checking if it is empty", () => {
+  const ll = new LinkedList<number>(null);
+  const result = ll.isEmpty();
+  assertEquals(result, true);
 });

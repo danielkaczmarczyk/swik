@@ -4,7 +4,7 @@ export class ListNode<T> {
   data: T;
   next: ListNode<T> | null;
 
-  constructor(data: T, next: ListNode<T> | null) {
+  constructor(data: T, next: ListNode<T> | null = null) {
     this.data = data;
     this.next = next;
   }
@@ -64,6 +64,7 @@ export class LinkedList<T> {
     return node;
   }
 
+  // TODO
   insertAtPosition(node: ListNode<T>) {
     unimplemented();
   }
@@ -79,11 +80,18 @@ export class LinkedList<T> {
     return null;
   }
 
+  // TODO
   delete(data: T) {
-    unimplemented();
+    // deleting at head case
+    const ll = new LinkedList<number>(new ListNode(3));
   }
 
   isEmpty() {
     return this.head === null;
+  }
+
+  toCanvas() {
+    return unimplemented();
+    // returns a <canvas> object that represents the data structure
   }
 }
