@@ -1,20 +1,24 @@
 import { unimplemented } from "../utils.ts";
 
+type NodeValue<T> = ListNode<T> | null;
+
 export class ListNode<T> {
   data: T;
-  next: ListNode<T> | null;
+  next: NodeValue<T>;
+  prev: NodeValue<T>;
 
-  constructor(data: T, next: ListNode<T> | null = null) {
+  constructor(data: T, next: NodeValue<T> = null, prev: NodeValue<T> = null) {
     this.data = data;
     this.next = next;
+    this.prev = prev;
   }
 }
 
 export class LinkedList<T> {
-  head: ListNode<T> | null;
+  head: NodeValue<T>;
   length: number;
 
-  constructor(head: ListNode<T> | null = null) {
+  constructor(head: NodeValue<T> = null) {
     this.head = head;
     if (head) {
       this.length = 1;
