@@ -72,7 +72,6 @@ export class LinkedList<T> {
     return node;
   }
 
-  // TODO implement double linking
   getNodeAtPosition(position: number) {
     let index = 0;
     let currentNode = this.getHead();
@@ -87,7 +86,6 @@ export class LinkedList<T> {
     return currentNode;
   }
 
-  // TODO implement double linking
   insertAtPosition(node: ListNode<T>, position: number) {
     if (position < 0) {
       throw new Error("negative index, operation not permitted");
@@ -100,7 +98,11 @@ export class LinkedList<T> {
       if (prevNode) {
         const nextNode = prevNode.next;
         prevNode.next = node;
+        node.prev = prevNode;
         node.next = nextNode;
+        if (nextNode) {
+          nextNode.prev = node;
+        }
       }
     }
 
