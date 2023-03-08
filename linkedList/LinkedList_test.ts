@@ -1,10 +1,11 @@
-// https://deno.land/manual@v1.31.1/basics/testing
-
 import { assertEquals } from "https://deno.land/std@0.178.0/testing/asserts.ts";
 import { LinkedList, ListNode } from "./LinkedList.ts";
 
-// I'm not sure whether tests run synchronously and in order, and I assume they don't
-// when (if) it breaks, refactoring will be necessary for setting up reliable test cases
+// TODO
+/**
+ * create list-generating helpers to remove repetition
+ * and enable parrallel execution with certainty of result
+ */
 
 // list setup
 const head = new ListNode<number>(3, null);
@@ -39,6 +40,29 @@ test("Inserting at head", () => {
 
 test("Deleting at head", () => {
   const ll = new LinkedList<number>(new ListNode(3));
+  ll.insertAtTail(new ListNode<number>(5));
+  ll.insertAtTail(new ListNode<number>(10));
+  ll.insertAtTail(new ListNode<number>(15));
+
+  const lengthBeforeDeletion = ll.length;
+  ll.delete(3);
+  const lengthAfterDeletion = ll.length;
+  assertEquals(lengthBeforeDeletion, lengthAfterDeletion + 1);
+  const missingNode = ll.search(3);
+  assertEquals(missingNode, null);
+});
+
+test({
+  name: "To array",
+  fn() {
+    const ll = new LinkedList<number>(new ListNode(1));
+    ll.insertAtTail(new ListNode(2));
+    ll.insertAtTail(new ListNode(3));
+    ll.insertAtTail(new ListNode(4));
+    ll.insertAtTail(new ListNode(5));
+    const arrayed = ll.toArray();
+    assertEquals(arrayed, [1, 2, 3, 4, 5, null]);
+  },
 });
 
 test({

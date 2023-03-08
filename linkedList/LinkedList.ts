@@ -1,4 +1,4 @@
-import { unimplemented } from "./utils.ts";
+import { unimplemented } from "../utils.ts";
 
 export class ListNode<T> {
   data: T;
@@ -82,8 +82,17 @@ export class LinkedList<T> {
 
   // TODO
   delete(data: T) {
-    // deleting at head case
-    const ll = new LinkedList<number>(new ListNode(3));
+    const currentNode = this.getHead();
+    while (currentNode) {
+      if (currentNode.data === data) {
+        if (currentNode === this.getHead()) {
+          const nextNode = currentNode.next;
+          this.head = nextNode;
+          this.decrementLength();
+          return currentNode;
+        }
+      }
+    }
   }
 
   isEmpty() {
@@ -93,5 +102,22 @@ export class LinkedList<T> {
   toCanvas() {
     return unimplemented();
     // returns a <canvas> object that represents the data structure
+  }
+
+  print() {
+    const list = this.toArray();
+    console.log(list);
+    return list;
+  }
+
+  toArray() {
+    const array = [];
+    let currentNode = this.head;
+    while (currentNode) {
+      array.push(currentNode.data);
+      currentNode = currentNode.next;
+    }
+    array.push(null);
+    return array;
   }
 }
