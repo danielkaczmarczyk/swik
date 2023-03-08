@@ -1,12 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.178.0/testing/asserts.ts";
 import { LinkedList, ListNode } from "./LinkedList.ts";
 
-// TODO
-/**
- * create list-generating helpers to remove repetition
- * and enable parrallel execution with certainty of result
- */
-
 // niceties
 const test = Deno.test;
 
