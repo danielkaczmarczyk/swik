@@ -1,9 +1,11 @@
 import { assertEquals } from "https://deno.land/std@0.178.0/testing/asserts.ts";
+
 import { LinkedList, ListNode } from "./LinkedList.ts";
 
 // niceties
 const test = Deno.test;
 
+// helpers
 function createList<T>(data: Array<T>) {
   const ll = new LinkedList<T>(null);
   ll.populate(data);
@@ -69,14 +71,24 @@ test({
 
 test({
   name: "Deleting one",
-  ignore: true,
-  fn() {},
+  fn() {
+    const ll = createList([1,2,3,4,5,6,7,8])
+    const lengthBeforeDeletion = ll.length;
+    ll.delete(5)
+    assertEquals(lengthBeforeDeletion, ll.length + 1)
+    assertEquals(ll.print(false), [1,2,3,4,6,7,8, null])
+  },
 });
 
 test({
   name: "Deleting at tail",
-  ignore: true,
-  fn() {},
+  fn() {
+    const ll = createList([1,2,3,4,5,6,7,8])
+    const lengthBeforeDeletion = ll.length;
+    ll.delete(8)
+    assertEquals(lengthBeforeDeletion, ll.length + 1)
+    assertEquals(ll.print(false), [1,2,3,4,5,6,7, null])
+  },
 });
 
 test("Searching", () => {
