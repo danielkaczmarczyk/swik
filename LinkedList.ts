@@ -1,3 +1,5 @@
+import { unimplemented } from "./utils.ts";
+
 export class ListNode<T> {
   data: T;
   next: ListNode<T> | null;
@@ -9,9 +11,9 @@ export class ListNode<T> {
 }
 
 export class LinkedList<T> {
-  head: ListNode<T>;
+  head: ListNode<T> | null;
 
-  constructor(head: ListNode<T>) {
+  constructor(head: ListNode<T> | null) {
     this.head = head;
   }
 
@@ -22,7 +24,7 @@ export class LinkedList<T> {
 
   getTail() {
     let currentNode = this.getHead();
-    while (currentNode.next) {
+    while (currentNode?.next) {
       currentNode = currentNode.next;
     }
     return currentNode;
@@ -30,7 +32,37 @@ export class LinkedList<T> {
 
   insertAtTail(node: ListNode<T>) {
     const tail = this.getTail();
-    tail.next = node;
+    if (tail) {
+      tail.next = node;
+    } else {
+      this.head = node;
+    }
     return node;
+  }
+
+  insertAtHead(node: ListNode<T>) {
+    const currentHead = this.getHead();
+    this.head = node;
+    node.next = currentHead;
+    return node;
+  }
+
+  insertAtPosition(node: ListNode<T>) {
+    unimplemented();
+  }
+
+  search(data: T) {
+    let currentNode = this.getHead();
+    while (currentNode?.next) {
+      if (currentNode.data === data) {
+        return currentNode;
+      }
+      currentNode = currentNode.next;
+    }
+    return null;
+  }
+
+  delete(data: T) {
+    unimplemented();
   }
 }
