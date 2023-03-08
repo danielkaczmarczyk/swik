@@ -49,8 +49,10 @@ export class LinkedList<T> {
 
   insertAtTail(node: ListNode<T>) {
     const tail = this.getTail();
+
     if (tail) {
       tail.next = node;
+      node.prev = tail;
     } else {
       this.head = node;
     }
@@ -63,10 +65,14 @@ export class LinkedList<T> {
     const currentHead = this.getHead();
     this.head = node;
     node.next = currentHead;
+    if (currentHead) {
+      currentHead.prev = node;
+    }
     this.incrementLength();
     return node;
   }
 
+  // TODO implement double linking
   getNodeAtPosition(position: number) {
     let index = 0;
     let currentNode = this.getHead();
@@ -81,6 +87,7 @@ export class LinkedList<T> {
     return currentNode;
   }
 
+  // TODO implement double linking
   insertAtPosition(node: ListNode<T>, position: number) {
     if (position < 0) {
       throw new Error("negative index, operation not permitted");
@@ -90,7 +97,6 @@ export class LinkedList<T> {
       this.insertAtTail(node);
     } else {
       const prevNode = this.getNodeAtPosition(position - 1);
-      console.log(prevNode);
       if (prevNode) {
         const nextNode = prevNode.next;
         prevNode.next = node;
@@ -112,6 +118,7 @@ export class LinkedList<T> {
     return null;
   }
 
+  // TODO implement double linking
   delete(data: T) {
     let currentNode = this.getHead();
     let previousNode = null;
@@ -154,7 +161,7 @@ export class LinkedList<T> {
     // returns a <canvas> object that represents the data structure
   }
 
-  print(sideEffect: boolean = true) {
+  print(sideEffect = true) {
     const list = this.toArray();
     if (sideEffect) console.log(list);
     return list;
