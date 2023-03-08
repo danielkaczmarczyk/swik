@@ -14,7 +14,7 @@ export class LinkedList<T> {
   head: ListNode<T> | null;
   length: number;
 
-  constructor(head: ListNode<T> | null) {
+  constructor(head: ListNode<T> | null = null) {
     this.head = head;
     if (head) {
       this.length = 1;
@@ -71,7 +71,7 @@ export class LinkedList<T> {
 
   search(data: T) {
     let currentNode = this.getHead();
-    while (currentNode?.next) {
+    while (currentNode) {
       if (currentNode.data === data) {
         return currentNode;
       }
@@ -82,16 +82,35 @@ export class LinkedList<T> {
 
   // TODO
   delete(data: T) {
-    const currentNode = this.getHead();
+    let currentNode = this.getHead();
+    let previousNode = null;
     while (currentNode) {
       if (currentNode.data === data) {
+        // head case
         if (currentNode === this.getHead()) {
           const nextNode = currentNode.next;
           this.head = nextNode;
           this.decrementLength();
           return currentNode;
+        } else {
+          // any other case
+          if (previousNode) {
+            previousNode.next = currentNode.next;
+            const nodeBeingDeleted = currentNode;
+            nodeBeingDeleted.next = null;
+            this.decrementLength();
+          }
         }
       }
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+    }
+  }
+
+  populate(data: Array<T>) {
+    for (const item of data) {
+      const newNode = new ListNode<T>(item);
+      this.insertAtTail(newNode);
     }
   }
 
@@ -104,9 +123,9 @@ export class LinkedList<T> {
     // returns a <canvas> object that represents the data structure
   }
 
-  print() {
+  print(sideEffect: boolean = true) {
     const list = this.toArray();
-    console.log(list);
+    if (sideEffect) console.log(list);
     return list;
   }
 

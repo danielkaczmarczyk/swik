@@ -7,21 +7,23 @@ import { LinkedList, ListNode } from "./LinkedList.ts";
  * and enable parrallel execution with certainty of result
  */
 
-// list setup
-const head = new ListNode<number>(3, null);
-const ll = new LinkedList<number>(head);
-const headFetched = ll.getHead();
-
 // niceties
 const test = Deno.test;
 
+function createList<T>(data: Array<T>) {
+  const ll = new LinkedList<T>(null);
+  ll.populate(data);
+  return ll;
+}
+
 // tests
 test("Linked List can be created", () => {
-  assertEquals(head, headFetched);
-  assertEquals(headFetched?.data, 3);
+  const ll = new LinkedList<number>();
+  assertEquals(ll.getHead(), null);
 });
 
 test("Inserting at tail", () => {
+  const ll = createList([1, 2, 3]);
   const newNode = new ListNode<number>(6, null);
   ll.insertAtTail(newNode);
   const tail = ll.getTail();
@@ -29,6 +31,7 @@ test("Inserting at tail", () => {
 });
 
 test("Inserting at head", () => {
+  const ll = createList([1, 2, 3]);
   const oldLength = ll.length;
   const newHeadNode = new ListNode<number>(15, null);
   ll.insertAtHead(newHeadNode);
@@ -39,11 +42,7 @@ test("Inserting at head", () => {
 });
 
 test("Deleting at head", () => {
-  const ll = new LinkedList<number>(new ListNode(3));
-  ll.insertAtTail(new ListNode<number>(5));
-  ll.insertAtTail(new ListNode<number>(10));
-  ll.insertAtTail(new ListNode<number>(15));
-
+  const ll = createList([3, 5, 10, 15]);
   const lengthBeforeDeletion = ll.length;
   ll.delete(3);
   const lengthAfterDeletion = ll.length;
@@ -55,24 +54,27 @@ test("Deleting at head", () => {
 test({
   name: "To array",
   fn() {
-    const ll = new LinkedList<number>(new ListNode(1));
-    ll.insertAtTail(new ListNode(2));
-    ll.insertAtTail(new ListNode(3));
-    ll.insertAtTail(new ListNode(4));
-    ll.insertAtTail(new ListNode(5));
-    const arrayed = ll.toArray();
-    assertEquals(arrayed, [1, 2, 3, 4, 5, null]);
+    const arrayedLL = createList([1, 2, 3, 4, 5]).toArray();
+    assertEquals(arrayedLL, [1, 2, 3, 4, 5, null]);
   },
 });
 
 test({
-  name: "Deleting",
-  ignore: true,
-  fn() {},
+  name: "Deleting many",
+  fn() {
+    const ll = createList([1, 2, 3, 4, 5, 6, 7]);
+    const lengthBeforeDeletions = ll.length;
+    for (const int of [3, 5, 6]) {
+      ll.delete(int);
+    }
+    const lengthAfterDeletions = ll.length;
+    assertEquals(lengthAfterDeletions + 3, lengthBeforeDeletions);
+    assertEquals(ll.print(false), [1, 2, 4, 7, null]);
+  },
 });
 
 test({
-  name: "Deleting multiple",
+  name: "Deleting one",
   ignore: true,
   fn() {},
 });
@@ -84,6 +86,7 @@ test({
 });
 
 test("Searching", () => {
+  const ll = createList([1, 2, 3, 15]);
   const result = ll.search(15);
   assertEquals(result?.data, 15);
 });
