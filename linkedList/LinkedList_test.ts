@@ -166,10 +166,28 @@ test({
 test({
   name: "calculateLength is correct",
   fn() {
-    const nodes = [1,2,3,4]
+    const nodes = [1, 2, 3, 4];
     const nodesLength = nodes.length;
-    const ll = createList(nodes)
+    const ll = createList(nodes);
     const length = ll.calculateLength();
-    assertEquals(length, nodesLength)
-  }
-})
+    assertEquals(length, nodesLength);
+  },
+});
+
+test({
+  name: "findMiddle on a even len list",
+  fn() {
+    const ll = createList([1, 2, 3, 4, 5, 6, 7, 8]);
+    const middleIndex = ll.findMiddle();
+    assertEquals(middleIndex, 3);
+  },
+});
+
+test({
+  name: "findMiddle on a odd len list",
+  fn() {
+    const ll = createList([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const middleIndex = ll.findMiddle();
+    assertEquals(middleIndex, 4);
+  },
+});

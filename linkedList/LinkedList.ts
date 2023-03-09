@@ -187,6 +187,10 @@ export class LinkedList<T> {
     return list;
   }
 
+  /**
+   * Converts the linked list into a native js array with .data members as
+   * values.
+   */
   toArray() {
     const array = [];
     let currentNode = this.head;
@@ -198,6 +202,10 @@ export class LinkedList<T> {
     return array;
   }
 
+  /**
+   * Calculates the length of the linked list in O(n) time. If you want O(1)
+   * performance, use the .length class property.
+   */
   calculateLength() {
     let currentNode = this.head;
     let len = 0;
@@ -207,5 +215,42 @@ export class LinkedList<T> {
     }
 
     return len;
+  }
+
+  /**
+   * Returns the index of the middle element of the list, skewed left
+   * (that means that if there is an even number of elements in the list,
+   * the index will point to the left element of the middle pair).
+   * 
+   * This is a slower way to get the length of a linked list. To do it faster
+   * just use the .length property on this class.
+   * 
+   * Implementation using slow/fast pointers for fun.
+   */
+  findMiddle() {
+    if (this.length < 3) {
+      return 0;
+    }
+
+    let slowPointer = this.head;
+    let index = 0;
+
+    // @ts-ignore: I know it will exist, see checking for length above
+    let fastPointer = this.head.next.next;
+
+    while (fastPointer) {
+      // @ts-ignore: slow pointer will never not exist, since fast pointer
+      // would have reached the end of the list first.
+      slowPointer = slowPointer.next;
+      index++;
+
+      fastPointer = fastPointer.next;
+
+      if (fastPointer) {
+        fastPointer = fastPointer.next;
+      }
+    }
+
+    return index;
   }
 }
