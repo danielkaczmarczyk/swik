@@ -191,3 +191,12 @@ test({
     assertEquals(middleIndex, 4);
   },
 });
+
+test({
+  name: "removeDuplicates",
+  fn() {
+    const ll = createList([1,1,1,1,3,3,1,1,1,4,5,6,7,3,4,2,1,1,1,8,8,8])
+    const len = ll.removeDuplicates();
+    assertEquals(len, 8);
+  }
+})

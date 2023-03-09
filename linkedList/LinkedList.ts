@@ -253,4 +253,21 @@ export class LinkedList<T> {
 
     return index;
   }
+
+  removeDuplicates() {
+    const items = new Set();
+
+    let currentNode = this.head;
+
+    while (currentNode) {
+      if (items.has(currentNode.data)) {
+        this.delete(currentNode.data);
+      } else {
+        items.add(currentNode.data)
+      }
+      currentNode = currentNode.next;
+    }
+
+    return this.length;
+  }
 }
