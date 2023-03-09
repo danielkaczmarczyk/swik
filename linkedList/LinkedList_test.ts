@@ -200,3 +200,27 @@ test({
     assertEquals(len, 8);
   }
 })
+
+// TODO needs value comparison too
+test({
+  name: "union",
+  fn() {
+    const ll1 = createList([1,2,3,4])
+    const ll2 = createList([5,6,7,8])
+    const preUnionLengthOfLL1 = ll1.length;
+    const preUnionLengthOfLL2 = ll2.length;
+    ll1.union(ll2);
+    assertEquals(ll1.length, preUnionLengthOfLL1 + preUnionLengthOfLL2)
+  }
+})
+
+// TODO needs value comparison too
+test({
+  name: "intersection",
+  fn() {
+    const ll1 = createList([1,2,3,4])
+    const ll2 = createList([5,2,3,8])
+    const intersection = ll1.intersection(ll2);
+    assertEquals(intersection.length, 2)
+  }
+})

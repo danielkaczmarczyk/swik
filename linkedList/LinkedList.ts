@@ -17,6 +17,7 @@ export class ListNode<T> {
 export class LinkedList<T> {
   head: NodeValue<T>;
   length: number;
+  valuesSet: Set<T> = new Set();
 
   constructor(head: NodeValue<T> = null) {
     this.head = head;
@@ -221,10 +222,10 @@ export class LinkedList<T> {
    * Returns the index of the middle element of the list, skewed left
    * (that means that if there is an even number of elements in the list,
    * the index will point to the left element of the middle pair).
-   * 
+   *
    * This is a slower way to get the length of a linked list. To do it faster
    * just use the .length property on this class.
-   * 
+   *
    * Implementation using slow/fast pointers for fun.
    */
   findMiddle() {
@@ -263,11 +264,48 @@ export class LinkedList<T> {
       if (items.has(currentNode.data)) {
         this.delete(currentNode.data);
       } else {
-        items.add(currentNode.data)
+        items.add(currentNode.data);
       }
       currentNode = currentNode.next;
     }
 
     return this.length;
+  }
+
+  union(otherList: LinkedList<T>) {
+    const tail = this.getTail();
+    const otherHead = otherList.getHead();
+    const otherLength = otherList.length;
+
+    if (tail) tail.next = otherHead;
+    if (otherHead) otherHead.prev = tail;
+    otherList.head = null;
+    this.length += otherLength;
+  }
+
+  setSet() {
+    const values = new Set<T>();
+    let currentNode = this.head;
+
+    while (currentNode) {
+      values.add(currentNode.data);
+      currentNode = currentNode.next;
+    }
+
+    this.valuesSet = values;
+  }
+
+  intersection(otherList: LinkedList<T>) {
+    this.setSet();
+    otherList.setSet();
+
+    const intersection = [...this.valuesSet].filter((x) =>
+      otherList.valuesSet.has(x)
+    );
+
+    const newList = new LinkedList<T>();
+    newList.populate(intersection);
+
+    return newList;
   }
 }
