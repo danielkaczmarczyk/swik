@@ -13,12 +13,12 @@ function createList<T>(data: Array<T>) {
 }
 
 // tests
-test("Linked List can be created", () => {
+test("new", () => {
   const ll = new LinkedList<number>();
   assertEquals(ll.getHead(), null);
 });
 
-test("Inserting at tail", () => {
+test("insertAtTail", () => {
   const ll = createList([1, 2, 3]);
   const newNode = new ListNode<number>(6, null);
   ll.insertAtTail(newNode);
@@ -26,7 +26,7 @@ test("Inserting at tail", () => {
   assertEquals(tail, newNode);
 });
 
-test("Inserting at head", () => {
+test("insertAtHead", () => {
   const ll = createList([1, 2, 3]);
   const oldLength = ll.length;
   const newHeadNode = new ListNode<number>(15, null);
@@ -37,7 +37,7 @@ test("Inserting at head", () => {
   assertEquals(oldLength + 1, newLength);
 });
 
-test("Deleting at head", () => {
+test("delete at head", () => {
   const ll = createList([3, 5, 10, 15]);
   const lengthBeforeDeletion = ll.length;
   ll.delete(3);
@@ -48,7 +48,7 @@ test("Deleting at head", () => {
 });
 
 test({
-  name: "To array",
+  name: "toArray",
   fn() {
     const arrayedLL = createList([1, 2, 3, 4, 5]).toArray();
     assertEquals(arrayedLL, [1, 2, 3, 4, 5, null]);
@@ -56,7 +56,7 @@ test({
 });
 
 test({
-  name: "Deleting many",
+  name: "delete many",
   fn() {
     const ll = createList([1, 2, 3, 4, 5, 6, 7]);
     const lengthBeforeDeletions = ll.length;
@@ -70,7 +70,7 @@ test({
 });
 
 test({
-  name: "Deleting one",
+  name: "delete one",
   fn() {
     const ll = createList([1, 2, 3, 4, 5, 6, 7, 8]);
     const lengthBeforeDeletion = ll.length;
@@ -81,7 +81,7 @@ test({
 });
 
 test({
-  name: "Deleting at tail",
+  name: "delete at tail",
   fn() {
     const ll = createList([1, 2, 3, 4, 5, 6, 7, 8]);
     const lengthBeforeDeletion = ll.length;
@@ -91,26 +91,26 @@ test({
   },
 });
 
-test("Searching", () => {
+test("search", () => {
   const ll = createList([1, 2, 3, 15]);
   const result = ll.search(15);
   assertEquals(result?.data, 15);
 });
 
-test("Checking if it is not empty", () => {
+test("isEmpty when full", () => {
   const ll = new LinkedList<number>(new ListNode(3, null));
   const result = ll.isEmpty();
   assertEquals(result, false);
 });
 
-test("Checking if it is empty", () => {
+test("isEmpty when empty", () => {
   const ll = new LinkedList<number>(null);
   const result = ll.isEmpty();
   assertEquals(result, true);
 });
 
 test({
-  name: "Inserting using insertAtPosition at head",
+  name: "insertAtPosition at head",
   fn() {
     const ll = createList([1, 2, 3, 4]);
     ll.insertAtPosition(new ListNode(5), 0);
@@ -119,7 +119,7 @@ test({
 });
 
 test({
-  name: "Inserting using insertAtPosition at tail",
+  name: "insertAtPosition at tail",
   fn() {
     const ll = createList([1, 2, 3, 4]);
     ll.insertAtPosition(new ListNode(5), 4);
@@ -128,7 +128,7 @@ test({
 });
 
 test({
-  name: "Inserting using insertAtPosition in the middle",
+  name: "insertAtPosition in the middle",
   fn() {
     const ll = createList([1, 2, 3, 4]);
     ll.insertAtPosition(new ListNode(5), 2);
@@ -137,7 +137,7 @@ test({
 });
 
 test({
-  name: "get node at position at head",
+  name: "getNodeAtPosition at head",
   fn() {
     const ll = createList([12, 3, 4, 56, 72]);
     const result = ll.getNodeAtPosition(0);
@@ -146,7 +146,7 @@ test({
 });
 
 test({
-  name: "get node at position at tail",
+  name: "getNodeAtPosition at tail",
   fn() {
     const ll = createList([12, 3, 4, 56, 72]);
     const result = ll.getNodeAtPosition(ll.length - 1);
@@ -155,10 +155,21 @@ test({
 });
 
 test({
-  name: "get node at position in the middle",
+  name: "getNodeAtPosition in the middle",
   fn() {
     const ll = createList([12, 3, 4, 56, 72]);
     const result = ll.getNodeAtPosition(2);
     assertEquals(result?.data, 4);
   },
 });
+
+test({
+  name: "calculateLength is correct",
+  fn() {
+    const nodes = [1,2,3,4]
+    const nodesLength = nodes.length;
+    const ll = createList(nodes)
+    const length = ll.calculateLength();
+    assertEquals(length, nodesLength)
+  }
+})

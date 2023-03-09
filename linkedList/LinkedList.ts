@@ -197,4 +197,15 @@ export class LinkedList<T> {
     array.push(null);
     return array;
   }
+
+  calculateLength() {
+    let currentNode = this.head;
+    let len = 0;
+    while (currentNode) {
+      len++;
+      currentNode = currentNode.next;
+    }
+
+    return len;
+  }
 }
